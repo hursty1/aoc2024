@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgpmwpci52hkv"]
+
+[ext_resource type="Script" path="res://UserInterface/user_interface.gd" id="1_ibw7a"]
+[ext_resource type="Shader" path="res://Shaders/Blur.gdshader" id="1_iqw8s"]
+[ext_resource type="FontFile" uid="uid://cxmmrplc1tpy6" path="res://UserInterface/Font/Staatliches-Regular.ttf" id="3_qyaiw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sxg3p"]
+shader = ExtResource("1_iqw8s")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_biit7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jmbga"]
+font = ExtResource("3_qyaiw")
+font_size = 72
+
+[node name="UserInterface" type="CanvasLayer"]
+script = ExtResource("1_ibw7a")
+
+[node name="PauseScreen" type="Control" parent="."]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGBlur" type="TextureRect" parent="PauseScreen"]
+material = SubResource("ShaderMaterial_sxg3p")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_biit7")
+
+[node name="PauseContainer" type="CenterContainer" parent="PauseScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseScreen/PauseContainer"]
+layout_mode = 2
+
+[node name="PausedText" type="Label" parent="PauseScreen/PauseContainer/VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_jmbga")
+
+[node name="Resume" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Settings" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit Game"
+
+[connection signal="pressed" from="PauseScreen/PauseContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseScreen/PauseContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

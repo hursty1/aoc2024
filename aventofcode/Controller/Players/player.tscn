@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://dx2pad8ej3ou1"]
+
+[ext_resource type="Script" path="res://Controller/Players/player.gd" id="1_v1so6"]
+[ext_resource type="Script" path="res://Controller/Players/Camera.gd" id="1_xxpfw"]
+[ext_resource type="PackedScene" uid="uid://h81514hatn5l" path="res://Controller/weapons/base_weapon.tscn" id="3_a5swl"]
+[ext_resource type="Script" path="res://Controller/Players/WeaponContainer.gd" id="3_gidln"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bswra"]
+albedo_color = Color(0.886954, 0.238036, 0.0293294, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3a32v"]
+radius = 0.45
+height = 1.85
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wegqu"]
+points = PackedVector3Array(-0.185229, -0.544058, -0.402885, 0.0598617, 0.493472, 0.443838, 0.168357, 0.516793, 0.413207, -0.189089, 0.77716, -0.272386, 0.414132, -0.545305, -0.158416, -0.349453, -0.600163, 0.250711, 0.331755, 0.544393, -0.29424, 0.170697, -0.717492, 0.336329, -0.434649, 0.549673, 0.087558, 0.419015, 0.551816, 0.143113, 0.0614881, 0.903444, 0.118089, -0.0793677, -0.903241, -0.107746, -0.402878, -0.544049, -0.185224, 0.0875548, -0.549674, -0.434649, -0.185226, 0.544048, -0.402877, 0.384262, -0.541559, 0.221816, -0.239478, 0.597922, 0.358531, -0.0498041, -0.494988, 0.445186, -0.374114, 0.541914, -0.23872, 0.256774, -0.838966, -0.0507373, 0.0880905, 0.636269, -0.409777, 0.228205, 0.836635, -0.13428, -0.246433, 0.838575, 0.0889637, -0.134631, -0.867297, 0.172992, 0.445186, 0.494994, -0.0498023, -0.409777, -0.636268, 0.0880937, 0.168357, -0.516794, 0.413208, 0.27629, -0.542271, -0.347351, 0.115934, 0.803752, 0.282279, 0.143671, -0.776211, -0.29975, 0.443826, -0.493464, 0.0599499, 0.301742, 0.512251, 0.328779)
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_nnbnq"]
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_v1so6")
+
+[node name="ProtoMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_bswra")
+mesh = SubResource("CapsuleMesh_3a32v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_wegqu")
+
+[node name="CameraTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraTarget" node_paths=PackedStringArray("target")]
+cull_mask = 1048573
+script = ExtResource("1_xxpfw")
+target = NodePath("..")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="CameraTarget/Camera"]
+remote_path = NodePath("../../../SubViewportContainer/SubViewport/WeaponCamera")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraTarget/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.70624, 0)
+shape = SubResource("SeparationRayShape3D_nnbnq")
+spring_length = 4.0
+
+[node name="ThirdPerson" type="Camera3D" parent="CameraTarget/Camera/SpringArm3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="WeaponCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+cull_mask = 1047554
+fov = 40.0
+
+[node name="WeaponContainer" type="Node3D" parent="SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("weapon_1")]
+unique_name_in_owner = true
+script = ExtResource("3_gidln")
+weapon_1 = NodePath("BaseWeapon")
+
+[node name="BaseWeapon" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponContainer" instance=ExtResource("3_a5swl")]

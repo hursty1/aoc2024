@@ -1,0 +1,10 @@
+
+
+# Weapons
+Stores damage, projectiles
+current clip
+
+# WeaponControler
+
+
+# Ammo Handler
