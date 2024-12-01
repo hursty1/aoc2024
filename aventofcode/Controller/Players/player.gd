@@ -89,15 +89,20 @@ func _input(event: InputEvent) -> void:
 		UserInterface.paused = !UserInterface.paused
 	
 func _physics_process(delta):
-	if not is_on_floor():
-		if velocity.y >= 0:
-			velocity.y -= gravity * delta
-		else:
-			velocity.y -= gravity * delta * fall_adjust_multiplier
+	#if not is_on_floor():
+		#if velocity.y >= 0:
+			#velocity.y -= gravity * delta
+		#else:
+			#velocity.y -= gravity * delta * fall_adjust_multiplier
 	
-	if Input.is_action_just_pressed(GameSettings.JUMP) and is_on_floor():
-		velocity.y = get_jump_velocity()
+	#if Input.is_action_just_pressed(GameSettings.JUMP) and is_on_floor():
+		#velocity.y = get_jump_velocity()
 			
+	##flying
+	if Input.is_action_pressed("jump"):
+		velocity.y = 12
+	else:
+		velocity.y = 0
 	## Direction
 	var input_dir = Input.get_vector(GameSettings.MOVE_LEFT, GameSettings.MOVE_RIGHT, GameSettings.MOVE_FORWARD, GameSettings.MOVE_BACK)
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
