@@ -12,3 +12,15 @@ const WEAPON_2 = 'weapon_2'
 const WEAPON_NEXT = 'next_weapon'
 const WEAPON_PREV = 'prev_weapon'
 const WEAPON_AIM = 'scope'
+
+
+
+func load_from_file(file_str):
+	var file = FileAccess.open(file_str, FileAccess.READ)
+	if file: # Check if the file was opened successfully
+		var content = file.get_as_text()
+		file.close()
+		return content.split("\n") # Splits the text into an array of lines
+	else:
+		print("Failed to open file.")
+		return []
