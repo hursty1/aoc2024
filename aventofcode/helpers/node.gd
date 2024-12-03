@@ -1,6 +1,7 @@
 extends Node3D
 
 
+@onready var box = $box
 
 @onready var ll = $SubViewport/Label
 #var ll
@@ -13,4 +14,13 @@ func _ready() -> void:
 
 func set_text(text):
 	ll.text = text
+	pass
+
+
+func set_height(height:int):
+	self.box.mesh.size.y = height
+	
+
+
+func set_color(color:Color):
 	pass

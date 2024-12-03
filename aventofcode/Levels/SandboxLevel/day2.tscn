@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cajb58jbupvwd"]
+[gd_scene load_steps=8 format=3 uid="uid://bi586r35aiom1"]
 
 [ext_resource type="Material" uid="uid://cnbem3labi8ee" path="res://Assets/Materials/Prototype_with_size_grey.tres" id="1_y0ys5"]
 [ext_resource type="PackedScene" uid="uid://dx2pad8ej3ou1" path="res://Controller/Players/player.tscn" id="2_oeyhn"]
 [ext_resource type="Script" path="res://02/part_1.gd" id="3_71ee8"]
+[ext_resource type="PackedScene" uid="uid://b1luaime8d3yh" path="res://helpers/node.tscn" id="4_i023s"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1unw3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -43,3 +44,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
 [node name="Part1" type="Node3D" parent="."]
 script = ExtResource("3_71ee8")
+dooda = ExtResource("4_i023s")

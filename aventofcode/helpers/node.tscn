@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" path="res://helpers/node.gd" id="1_lxoc3"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_kagfe"]
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="SphereMesh" id="SphereMesh_tk7wx"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_i4y4u"]
 viewport_path = NodePath("SubViewport")
@@ -12,7 +11,7 @@ viewport_path = NodePath("SubViewport")
 script = ExtResource("1_lxoc3")
 
 [node name="box" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_kagfe")
+mesh = SubResource("SphereMesh_tk7wx")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(200, 25)

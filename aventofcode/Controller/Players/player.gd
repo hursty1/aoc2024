@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Player
 
 ## How fast the player can move m/s
-@export var base_speed := 6.0
+@export var base_speed := 40.0
 ## How High the player can jump in meters
 @export var jump_height := 1.2
 ## How fast the player will fall after reaching jump height
@@ -89,11 +89,11 @@ func _input(event: InputEvent) -> void:
 		UserInterface.paused = !UserInterface.paused
 	
 func _physics_process(delta):
-	#if not is_on_floor():
-		#if velocity.y >= 0:
-			#velocity.y -= gravity * delta
-		#else:
-			#velocity.y -= gravity * delta * fall_adjust_multiplier
+	if not is_on_floor():
+		if velocity.y >= 0:
+			velocity.y -= gravity * delta
+		else:
+			velocity.y -= gravity * delta * fall_adjust_multiplier
 	
 	#if Input.is_action_just_pressed(GameSettings.JUMP) and is_on_floor():
 		#velocity.y = get_jump_velocity()
